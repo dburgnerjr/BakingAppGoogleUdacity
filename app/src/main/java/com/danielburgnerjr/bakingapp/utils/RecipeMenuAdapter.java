@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RecipeMenuAdapter extends ArrayAdapter {
     private Context mContext;
     private int mLayoutResourceId;
-    private List<Recipe> mRecipeData = new ArrayList<>();
+    public List<Recipe> mRecipeData = new ArrayList<>();
 
     public RecipeMenuAdapter(Context context, int layoutResourceId, List<Recipe> data) {
         super(context, layoutResourceId, data);

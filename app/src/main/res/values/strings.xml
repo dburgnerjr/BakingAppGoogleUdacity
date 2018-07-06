@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Baking App</string>
+
+    <!--Error Messages-->
+    <string name="connection_error_title">Connection Error</string>
+    <string name="connection_error">Recipe data cannot be loaded. Check for your connection.</string>
+    <string name="close_on_intent_error">No data is found.</string>
+
+    <!--Button name-->
+    <string name="reload_button">Reload</string>
 </resources>
