@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailRecipeListActivity"
+            android:parentActivityName=".MainActivity"  />
+        <activity android:name=".IngredientsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/ingredient_name_hardcoded" />
     </application>
 
 </manifest>

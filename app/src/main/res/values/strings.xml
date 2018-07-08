@@ -8,4 +8,11 @@
 
     <!--Button name-->
     <string name="reload_button">Reload</string>
+
+    <!--ingredient-->
+    <string name="ingredient_name_hardcoded">lemon juices</string>
+    <string name="ingredient_amount_hardcoded">2 tablespoons</string>
+
+    <!--ingredientAdapter-->
+    <string name="ingredient_amount">%f %s</string>
 </resources>
