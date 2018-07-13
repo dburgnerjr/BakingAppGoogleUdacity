@@ -1,6 +1,5 @@
 package com.danielburgnerjr.bakingapp;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -53,6 +52,12 @@ public class DetailRecipeListActivity extends AppCompatActivity implements Detai
             Intent ingredientsIntent = new Intent(DetailRecipeListActivity.this,IngredientActivity.class);
             ingredientsIntent.putParcelableArrayListExtra(IngredientActivity.INGREDIENTS_EXTRA, (ArrayList<? extends Parcelable>) recipe.getIngredients());
             startActivity(ingredientsIntent);
+        } else {
+            Intent stepIntent = new Intent(DetailRecipeListActivity.this, StepActivity.class);
+            stepIntent.putParcelableArrayListExtra(StepActivity.STEPS_EXTRA, (ArrayList<? extends Parcelable>) recipe.getSteps());
+            stepIntent.putExtra(StepActivity.POS_EXTRA, position-1);
+            stepIntent.putExtra(StepActivity.RECIPE_NAME_EXTRA, recipe.getName());
+            startActivity(stepIntent);
         }
     }
 }

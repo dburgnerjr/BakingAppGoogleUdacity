@@ -20,13 +20,13 @@ import java.util.ArrayList;
 public class RecipeMenuAdapter extends ArrayAdapter {
     private Context mContext;
     private int mLayoutResourceId;
-    public List<Recipe> mRecipeData = new ArrayList<>();
+    public List<Recipe> mData = new ArrayList<>();
 
     public RecipeMenuAdapter(Context context, int layoutResourceId, List<Recipe> data) {
         super(context, layoutResourceId, data);
         mContext = context;
         mLayoutResourceId = layoutResourceId;
-        mRecipeData = data;
+        mData = data;
     }
 
     static class ViewHolder {
@@ -46,8 +46,8 @@ public class RecipeMenuAdapter extends ArrayAdapter {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             convertView = inflater.inflate(mLayoutResourceId, parent, false);
             holder = new ViewHolder();
-            holder.imageTitle = (TextView) convertView.findViewById(R.id.recipe_grid_view);
-            holder.image = (ImageView) convertView.findViewById(R.id.image);
+            holder.imageTitle = (TextView) convertView.findViewById(R.id.recipe_name);
+            holder.image = (ImageView) convertView.findViewById(R.id.recipe_image);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -58,4 +58,5 @@ public class RecipeMenuAdapter extends ArrayAdapter {
 
         return convertView;
     }
+
 }
