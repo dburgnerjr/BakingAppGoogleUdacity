@@ -1,6 +1,7 @@
 package com.danielburgnerjr.bakingapp.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,8 @@ import java.util.List;
 public class DetailRecipeListFragment extends Fragment {
 
     public static String LIST_NAMES_EXTRA = "names_extra";
+
+    private ArrayList<String> mNameList;
 
     // Define a new interface OnImageClickListener that triggers a callback in the host activity
     OnItemClickListener mCallback;
@@ -50,22 +53,34 @@ public class DetailRecipeListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            mNameList = savedInstanceState.getStringArrayList(LIST_NAMES_EXTRA);
+        } else {
+            mNameList = getArguments().getStringArrayList(LIST_NAMES_EXTRA);
+        }
+
         final View rootView = inflater.inflate(R.layout.fragment_detail_recipe_list,container,false);
 
         ListView listView = (ListView)rootView.findViewById(R.id.lv);
-        final ArrayList<String> names_list = getArguments().getStringArrayList(LIST_NAMES_EXTRA);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                (getContext(), android.R.layout.simple_list_item_1, (List<String>) names_list);
+                (getContext(), android.R.layout.simple_list_item_1, mNameList);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),names_list.get(position) + "is clicked.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),mNameList.get(position) + "is clicked.",Toast.LENGTH_SHORT).show();
                 mCallback.onItemSelected(position);
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList(LIST_NAMES_EXTRA,mNameList);
     }
 }

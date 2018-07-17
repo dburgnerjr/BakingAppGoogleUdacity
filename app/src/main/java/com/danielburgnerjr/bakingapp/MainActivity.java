@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Item is clicked at "+ position,Toast.LENGTH_SHORT).show();
                 Recipe item = (Recipe) parent.getItemAtPosition(position);
                 Intent detailRecipeListIntent = new Intent(MainActivity.this,DetailRecipeListActivity.class);
-                detailRecipeListIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA,item);
+                detailRecipeListIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, item);
                 startActivity(detailRecipeListIntent);
             }
         });
