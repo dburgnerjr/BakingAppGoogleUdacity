@@ -20,11 +20,25 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailRecipeListActivity"
-            android:parentActivityName=".MainActivity"  />
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".IngredientActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/ingredient_name_hardcoded" />
         <activity android:name=".StepActivity"/>
+
+        <service
+            android:name=".widgets.ListViewWigetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver android:name=".widget.BakingAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

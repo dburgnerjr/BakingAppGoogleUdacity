@@ -18,6 +18,11 @@ public class Ingredient implements Parcelable {
     @Expose
     private String strIngredient;
 
+    public Ingredient(Double dQ, String strM, String strI) {
+        this.dQuantity = dQ;
+        this.strMeasure = strM;
+        this.strIngredient = strI;
+    }
     public Double getQuantity() {
         return dQuantity;
     }
