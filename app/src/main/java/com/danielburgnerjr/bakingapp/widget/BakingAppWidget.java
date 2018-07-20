@@ -7,15 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.danielburgnerjr.bakingapp.MainActivity;
+import com.danielburgnerjr.bakingapp.DetailRecipeListActivity;
 import com.danielburgnerjr.bakingapp.R;
+import com.danielburgnerjr.bakingapp.model.Recipe;
 
 public class BakingAppWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        CharSequence widgetText = "Recipe Name";
+        Recipe recipe = WidgetDataModel.getRecipe(context);
+        if (recipe !=null) {
+            widgetText = recipe.getName();
+        }
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
         views.setTextViewText(R.id.recipe_list_name, widgetText);
@@ -23,9 +28,17 @@ public class BakingAppWidget extends AppWidgetProvider {
         Intent intentService = new Intent(context, ListViewWidgetService.class);
         views.setRemoteAdapter(R.id.ingredients_list,intentService);
 
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, DetailRecipeListActivity.class);
+        intent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, recipe);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.recipe_list_name, pendingIntent);
+        if (!widgetText.equals("Recipe Name")) {
+            views.setOnClickPendingIntent(R.id.recipe_list_name, pendingIntent);
+        }
+        Intent appIntent = new Intent(context, DetailRecipeListActivity.class);
+        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.ingredients_list, appPendingIntent);
+
+        views.setEmptyView(R.id.ingredients_list,R.id.empty_view);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -34,6 +47,10 @@ public class BakingAppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+        WidgetUpdateService.startActionUpdateListView(context,null);
+    }
+
+    public static void updateAppWidgets (Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }

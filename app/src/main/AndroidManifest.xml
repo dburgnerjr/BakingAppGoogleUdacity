@@ -24,11 +24,13 @@
         <activity android:name=".IngredientActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/ingredient_name_hardcoded" />
-        <activity android:name=".StepActivity"/>
+        <activity android:name=".StepActivity" />
 
         <service
-            android:name=".widgets.ListViewWigetService"
+            android:name=".widget.ListViewWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service android:name=".widget.WidgetUpdateService"></service>
 
         <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>

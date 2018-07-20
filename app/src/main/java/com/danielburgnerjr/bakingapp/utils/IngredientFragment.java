@@ -32,7 +32,7 @@ public class IngredientFragment extends Fragment {
 
         mIngredients = getArguments().getParcelableArrayList(INGREDIENTS_EXTRA);
 
-        RecyclerView rv = (RecyclerView)view.findViewById(R.id.ingredients_rv);
+        RecyclerView rv = view.findViewById(R.id.ingredients_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         IngredientAdapter ingredientsAdapter = new IngredientAdapter(getActivity(), mIngredients);
         rv.setLayoutManager(linearLayoutManager);

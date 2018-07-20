@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.AndroidException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import android.widget.Toast;
 import com.danielburgnerjr.bakingapp.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class DetailRecipeListFragment extends Fragment {
 
@@ -62,8 +59,8 @@ public class DetailRecipeListFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_detail_recipe_list,container,false);
 
-        ListView listView = (ListView)rootView.findViewById(R.id.lv);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+        ListView listView = rootView.findViewById(R.id.lv);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
                 (getContext(), android.R.layout.simple_list_item_1, mNameList);
         listView.setAdapter(arrayAdapter);
 

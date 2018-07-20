@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,15 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import java.net.URI;
+import javax.xml.parsers.SAXParser;
 
 public class PlayerFragment extends Fragment {
 
-    public static String VIDEO_URL_EXTRA = "video_url" ;
-    public static String DESCRIPTION_EXTRA = "description" ;
+    public static String VIDEO_URL_EXTRA = "video_url";
+    public static String DESCRIPTION_EXTRA = "description";
+    public static String PLAYBACK_POS_EXTRA = "pbpe";
+    public static String CURRENT_WINDOW_EXTRA = "window";
+    public static String PLAY_WHEN_READY_EXTRA = "play";
 
     private SimpleExoPlayer player;
     private PlayerView playerView;
@@ -53,6 +57,11 @@ public class PlayerFragment extends Fragment {
 
         videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
         stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
+        if (savedInstanceState!=null) {
+            playbackPosition = savedInstanceState.getLong(PLAYBACK_POS_EXTRA);
+            currentWindow = savedInstanceState.getInt(CURRENT_WINDOW_EXTRA,0);
+            playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_EXTRA);
+        }
         stepDescriptionTv.setText(stepDescription);
 
         if(videoUrl.equals("")){
@@ -79,19 +88,9 @@ public class PlayerFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        releasePlayer();
     }
 
     private void initializePlayer() {
@@ -104,18 +103,27 @@ public class PlayerFragment extends Fragment {
         }
         MediaSource mediaSource = new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory("bakingApp-dtn9797"))
                 .createMediaSource(Uri.parse(videoUrl));
-        player.prepare(mediaSource, true, false);
+        player.prepare(mediaSource, false, false);
     }
 
     private void releasePlayer() {
         if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        playbackPosition = player.getCurrentPosition();
+        currentWindow = player.getCurrentWindowIndex();
+        playWhenReady = player.getPlayWhenReady();
+        outState.putLong(PLAYBACK_POS_EXTRA,playbackPosition);
+        outState.putInt(CURRENT_WINDOW_EXTRA,currentWindow);
+        outState.putBoolean(PLAY_WHEN_READY_EXTRA,playWhenReady);
+    }
+
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE

@@ -6,12 +6,9 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.danielburgnerjr.bakingapp.model.Ingredient;
-import com.danielburgnerjr.bakingapp.utils.IngredientAdapter;
 import com.danielburgnerjr.bakingapp.utils.IngredientFragment;
 
 import java.util.List;

@@ -46,6 +46,7 @@ public class StepActivity extends AppCompatActivity {
     private Button previousButton;
 
     private FragmentManager fragmentManager;
+    private PlayerFragment playerFragment;
     private String recipeName = "";
 
     private int currentPos;
@@ -58,21 +59,26 @@ public class StepActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_recipe_step);
 
-        toolBar = (Toolbar) findViewById(R.id.toolBar);
-        nextButton = (Button)findViewById(R.id.forward_button);
-        previousButton = (Button)findViewById(R.id.back_button);
+        toolBar = findViewById(R.id.toolBar);
+        nextButton = findViewById(R.id.forward_button);
+        previousButton = findViewById(R.id.back_button);
         fragmentManager = getSupportFragmentManager();
 
         Intent intent = getIntent();
         if (intent == null){
             closeOnError();
         }
-        currentPos = intent.getIntExtra(POS_EXTRA,defaultPos);
         steps = intent.getParcelableArrayListExtra(STEPS_EXTRA);
         recipeName = intent.getStringExtra(RECIPE_NAME_EXTRA);
+        if (savedInstanceState!= null) {
+            currentPos = savedInstanceState.getInt(POS_EXTRA);
+        } else {
+            currentPos = intent.getIntExtra(POS_EXTRA, defaultPos);
+            populatePlayerView();
+        }
 
         toolBar.setTitle(recipeName);
-        toolBar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        toolBar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +87,7 @@ public class StepActivity extends AppCompatActivity {
             }
         });
 
-        populatePlayerView();
+        setEnablePreviousNextButton();
     }
 
     private void populatePlayerView(){
@@ -93,7 +99,7 @@ public class StepActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(PlayerFragment.DESCRIPTION_EXTRA,stepDescription);
         bundle.putString(PlayerFragment.VIDEO_URL_EXTRA,videoUrl);
-        PlayerFragment playerFragment = new PlayerFragment();
+        playerFragment = new PlayerFragment();
         playerFragment.setArguments(bundle);
 
         fragmentManager.beginTransaction()
@@ -110,23 +116,31 @@ public class StepActivity extends AppCompatActivity {
     public void nextOnClick(View view) {
         Toast.makeText(this,"Next",Toast.LENGTH_SHORT).show();
         currentPos++;
-        if (currentPos == steps.size()-1) {
-            nextButton.setEnabled(false);
-        } else if (currentPos == 0) {
-            previousButton.setEnabled(true);
-        }
+        setEnablePreviousNextButton();
         populatePlayerView();
     }
 
     public void previousOnClick(View view) {
         Toast.makeText(this,"Previous",Toast.LENGTH_SHORT).show();
         currentPos--;
-        if (currentPos == 0) {
-            previousButton.setEnabled(false);
-        } else if (currentPos == steps.size() - 1) {
-            nextButton.setEnabled(true);
-        }
+        setEnablePreviousNextButton();
         populatePlayerView();
     }
 
+    public void setEnablePreviousNextButton(){
+        if (currentPos == steps.size() - 1) {
+            nextButton.setEnabled(false);
+        } else if (currentPos == 0) {
+            previousButton.setEnabled(false);
+        } else {
+            nextButton.setEnabled(true);
+            previousButton.setEnabled(true);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POS_EXTRA,currentPos);
+    }
 }

@@ -49,7 +49,7 @@ public class DetailRecipeListActivity extends AppCompatActivity implements Detai
         }
 
         setTitle(recipe.getName());
-        mTwoPane = (findViewById(R.id.step_player_fragment) != null) ? true : false;
+        mTwoPane = findViewById(R.id.step_player_fragment) != null;
     }
 
     private void closeOnError() {

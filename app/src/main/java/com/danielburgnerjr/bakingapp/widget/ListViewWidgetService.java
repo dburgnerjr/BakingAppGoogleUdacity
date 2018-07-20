@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.danielburgnerjr.bakingapp.DetailRecipeListActivity;
 import com.danielburgnerjr.bakingapp.R;
 import com.danielburgnerjr.bakingapp.model.Ingredient;
+import com.danielburgnerjr.bakingapp.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,8 @@ public class ListViewWidgetService extends RemoteViewsService {
 
 class AppWidgetListView implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
-    String recipe_name = "Recipe_Name";
     List<Ingredient> ingredients = new ArrayList<>();
+    Recipe recipe = null;
 
     public AppWidgetListView(Context mContext) {
         this.mContext = mContext;
@@ -29,14 +31,12 @@ class AppWidgetListView implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onCreate() {
-        ingredients.add(new Ingredient(20.0, "pb", "ingredient0"));
-        ingredients.add(new Ingredient(21.0, "pl", "ingredient1"));
-        ingredients.add(new Ingredient(22.0, "pa", "ingredient2"));
     }
 
     @Override
     public void onDataSetChanged() {
-
+        recipe = WidgetDataModel.getRecipe(mContext);
+        ingredients = recipe.getIngredients();
     }
 
     @Override
@@ -54,8 +54,11 @@ class AppWidgetListView implements RemoteViewsService.RemoteViewsFactory {
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.list_item_widget);
 
         remoteViews.setTextViewText(R.id.ingredient_name_widget_tv, ingredients.get(position).getIngredient());
-        remoteViews.setTextViewText(R.id.ingredient_amount_widget_tv, ingredients.get(position).getMeasure());
+        remoteViews.setTextViewText(R.id.ingredient_amount_widget_tv,mContext.getResources().getString(R.string.ingredient_amount, ingredients.get(position).getQuantity(), ingredients.get(position).getMeasure()));
 
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, recipe);
+        remoteViews.setOnClickFillInIntent(R.id.parent_view, fillInIntent);
         return remoteViews;
     }
 
