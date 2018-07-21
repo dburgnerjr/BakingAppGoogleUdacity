@@ -20,6 +20,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     public ListAdapter(Context mContext, ItemListener mItemClickListener, ArrayList<String> mData) {
         this.mContext = mContext;
         this.mData = mData;
+        this.mItemClickListener = mItemClickListener;
     }
 
     @NonNull

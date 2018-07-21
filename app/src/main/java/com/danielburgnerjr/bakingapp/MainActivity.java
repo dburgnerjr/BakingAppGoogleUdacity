@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
     @Override
     public void onRecipeClicked(int position) {
         Toast.makeText(getApplicationContext(),"Item is clicked at "+ position,Toast.LENGTH_SHORT).show();
-        Recipe item = (Recipe) mRecipes.get(position);
+        Recipe item = mRecipes.get(position);
         Intent detailRecipeListIntent = new Intent(MainActivity.this, DetailRecipeListActivity.class);
         detailRecipeListIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, item);
 
