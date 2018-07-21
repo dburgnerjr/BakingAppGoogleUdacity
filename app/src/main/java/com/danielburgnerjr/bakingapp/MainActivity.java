@@ -10,37 +10,32 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.danielburgnerjr.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.danielburgnerjr.bakingapp.model.Recipe;
 import com.danielburgnerjr.bakingapp.utils.RecipeClient;
-import com.danielburgnerjr.bakingapp.utils.RecipeMenuAdapter;
+import com.danielburgnerjr.bakingapp.utils.RecipesAdapter;
 import com.danielburgnerjr.bakingapp.utils.RetrofitClient;
 import com.danielburgnerjr.bakingapp.widget.WidgetUpdateService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipesAdapter.ItemListener {
 
     static private String Tag = MainActivity.class.getSimpleName();
     public static String RECIPES_EXTRA = "recipes_extra";
 
-    @BindView(R.id.recipe_grid_view)
-    GridView recipeGv;
-    RecipeMenuAdapter mRecipeMenuAdapter;
     List<Recipe> mRecipes = new ArrayList<>();
     @Nullable
     private SimpleIdlingResource mIdlingResource;
@@ -70,23 +65,12 @@ public class MainActivity extends AppCompatActivity {
         else {
             loadRecipesData();
         }
-        recipeGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"Item is clicked at "+ position,Toast.LENGTH_SHORT).show();
-                Recipe item = (Recipe) parent.getItemAtPosition(position);
-                Intent detailRecipeListIntent = new Intent(MainActivity.this,DetailRecipeListActivity.class);
-                detailRecipeListIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, item);
-                WidgetUpdateService.startActionUpdateListView(getApplicationContext(), item);
-                startActivity(detailRecipeListIntent);
-            }
-        });
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        outState.putParcelableArrayList(RECIPES_EXTRA,(ArrayList<Recipe>)mRecipes);
+        outState.putParcelableArrayList(RECIPES_EXTRA, (ArrayList<Recipe>)mRecipes);
     }
 
     public void populateUI () {
@@ -94,8 +78,12 @@ public class MainActivity extends AppCompatActivity {
         if (mIdlingResource != null) {
             mIdlingResource.setIdleState(true);
         }
-        mRecipeMenuAdapter = new RecipeMenuAdapter(MainActivity.this, R.layout.recipe_list_item, mRecipes);
-        recipeGv.setAdapter(mRecipeMenuAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        RecipesAdapter recipesAdapter = new RecipesAdapter(this, this, mRecipes);
+        RecyclerView recyclerView = findViewById(R.id.recipe_rv);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(recipesAdapter);
     }
 
     public void loadRecipesData () {
@@ -125,5 +113,16 @@ public class MainActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+    }
+
+    @Override
+    public void onRecipeClicked(int position) {
+        Toast.makeText(getApplicationContext(),"Item is clicked at "+ position,Toast.LENGTH_SHORT).show();
+        Recipe item = (Recipe) mRecipes.get(position);
+        Intent detailRecipeListIntent = new Intent(MainActivity.this, DetailRecipeListActivity.class);
+        detailRecipeListIntent.putExtra(DetailRecipeListActivity.RECIPE_EXTRA, item);
+
+        WidgetUpdateService.startActionUpdateListView(getApplicationContext(), item);
+        startActivity(detailRecipeListIntent);
     }
 }

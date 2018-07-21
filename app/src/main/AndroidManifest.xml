@@ -30,7 +30,7 @@
             android:name=".widget.ListViewWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <service android:name=".widget.WidgetUpdateService"></service>
+        <service android:name=".widget.WidgetUpdateService" />
 
         <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>

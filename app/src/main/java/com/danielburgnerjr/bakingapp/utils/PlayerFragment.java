@@ -23,8 +23,6 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import javax.xml.parsers.SAXParser;
-
 public class PlayerFragment extends Fragment {
 
     public static String VIDEO_URL_EXTRA = "video_url";

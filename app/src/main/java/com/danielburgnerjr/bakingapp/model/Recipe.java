@@ -28,6 +28,7 @@ public class Recipe implements Parcelable {
     @SerializedName("image")
     @Expose
     private String strImage;
+    private int nImageId;
 
     public Integer getId() {
         return nID;
@@ -75,6 +76,14 @@ public class Recipe implements Parcelable {
 
     public void setImage(String strI) {
         this.strImage = strI;
+    }
+
+    public void setImageId(int imageId) {
+        this.nImageId = imageId;
+    }
+
+    public int getImageId () {
+        return nImageId;
     }
 
     public ArrayList<String> getShortDescriptionsFromSteps (){

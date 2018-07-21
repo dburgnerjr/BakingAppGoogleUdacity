@@ -11,12 +11,13 @@ import com.danielburgnerjr.bakingapp.model.Recipe;
 import com.danielburgnerjr.bakingapp.model.Step;
 import com.danielburgnerjr.bakingapp.utils.DetailRecipeListFragment;
 import com.danielburgnerjr.bakingapp.utils.IngredientFragment;
+import com.danielburgnerjr.bakingapp.utils.ListAdapter;
 import com.danielburgnerjr.bakingapp.utils.PlayerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailRecipeListActivity extends AppCompatActivity implements DetailRecipeListFragment.OnItemClickListener {
+public class DetailRecipeListActivity extends AppCompatActivity implements ListAdapter.ItemListener {
     public static String RECIPE_EXTRA = "recipes_extra";
     private boolean mTwoPane;
     android.support.v4.app.FragmentManager mFragmentManager;
