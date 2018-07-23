@@ -91,6 +91,21 @@ public class PlayerFragment extends Fragment {
         releasePlayer();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
     private void initializePlayer() {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
@@ -106,6 +121,9 @@ public class PlayerFragment extends Fragment {
 
     private void releasePlayer() {
         if (player != null) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;
         }

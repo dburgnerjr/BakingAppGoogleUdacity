@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.7.3'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.7.3'
+    implementation 'com.github.rubensousa:previewseekbar:2.0.0'
+    implementation 'com.github.rubensousa:previewseekbar-exoplayer:2.8.1.0'
     //testing idling resource
     implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
     // Testing-only dependencies
