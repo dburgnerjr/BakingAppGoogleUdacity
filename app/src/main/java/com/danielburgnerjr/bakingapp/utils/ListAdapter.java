@@ -6,63 +6,91 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.danielburgnerjr.bakingapp.R;
+import com.danielburgnerjr.bakingapp.model.Recipe;
+
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.RecipesAdapterViewHolder> {
 
-    Context mContext;
-    ArrayList<String> mData;
-    protected static ItemListener mItemClickListener;
+    private Context mContext;
 
-    public ListAdapter(Context mContext, ItemListener mItemClickListener, ArrayList<String> mData) {
-        this.mContext = mContext;
-        this.mData = mData;
-        this.mItemClickListener = mItemClickListener;
+    private ArrayList<Integer> arrayListImages;
+    private ArrayList<Recipe> mRecipeArrayListData;
+    private RecipesAdapterOnClickHandler recipesAdapterOnClickHandler;
+
+    public interface RecipesAdapterOnClickHandler {
+        void onRecipeClick(Recipe recipe,int position);
     }
+
+    public ListAdapter(RecipesAdapterOnClickHandler OnClickHandler){
+        recipesAdapterOnClickHandler=OnClickHandler;
+    }
+
 
     @NonNull
     @Override
-    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_menu_vh, parent, false);
-        return new ListViewHolder(view);
+    public ListAdapter.RecipesAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        mContext=parent.getContext();
+
+        LayoutInflater layoutInflater=LayoutInflater.from(mContext);
+        int resource= R.layout.adapter_main_design;
+        View view=layoutInflater.inflate(resource,parent,false);
+
+        return new RecipesAdapterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        holder.setData(mData.get(position), position);
+    public void onBindViewHolder(@NonNull ListAdapter.RecipesAdapterViewHolder holder, int position) {
 
+        holder.recipeTitle.setText(mRecipeArrayListData.get(position).getName());
+
+
+        arrayListImages=new ArrayList<>();
+        arrayListImages.add(R.drawable.n_pie);
+        arrayListImages.add(R.drawable.brownies);
+        arrayListImages.add(R.drawable.yellow_cake);
+        arrayListImages.add(R.drawable.cheese_cake);
+
+        int imagePosition= arrayListImages.get(position);
+
+        holder.recipePhoto.setImageResource(imagePosition);
+
+    }
+
+    public void setRecipesData(ArrayList<Recipe> recipesData){
+        mRecipeArrayListData = recipesData;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if (mRecipeArrayListData == null) {
+            return 0;
+        } else {
+            return mRecipeArrayListData.size();
+        }
     }
 
-    public interface ItemListener {
-        void onItemSelected(int pos);
-    }
+    public class RecipesAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView recipePhoto;
+        TextView recipeTitle;
 
-    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView shortDescriptionTv;
-        int VHPos;
-
-        public ListViewHolder(View itemView) {
+        public RecipesAdapterViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            shortDescriptionTv = itemView.findViewById(R.id.short_description_tv);
-        }
-
-        public void setData (String data, int pos){
-            shortDescriptionTv.setText(data);
-            VHPos = pos;
+            recipeTitle = itemView.findViewById(R.id.cardView_textView_recipe_name);
+            recipePhoto = itemView.findViewById(R.id.cardview_imageView);
         }
 
         @Override
-        public void onClick(View v) {
-            ListAdapter.mItemClickListener.onItemSelected(VHPos);
+        public void onClick(View view) {
+            Recipe recipe=mRecipeArrayListData.get(getAdapterPosition());
+            recipesAdapterOnClickHandler.onRecipeClick(recipe,getAdapterPosition());
         }
     }
 }

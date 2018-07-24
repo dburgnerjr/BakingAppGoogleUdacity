@@ -32,6 +32,11 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH
         void onRecipeClicked(int position);
     }
 
+    public void setRecipesData(ArrayList<Recipe> recipesData){
+        mData = recipesData;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecipeVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

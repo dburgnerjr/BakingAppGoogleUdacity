@@ -8,7 +8,7 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="320dp"
         app:controller_layout_id="@layout/exo_playback_control_view"
         android:layout_weight="0"
         app:fastforward_increment="1000"
