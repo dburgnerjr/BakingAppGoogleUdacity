@@ -107,6 +107,6 @@ public class DetailRecipeListActivity extends AppCompatActivity implements ListA
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(RECIPE_EXTRA,recipe);
+        outState.putParcelable(RECIPE_EXTRA, recipe);
     }
 }

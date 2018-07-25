@@ -28,19 +28,20 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH
         this.mData = mData;
     }
 
-    public interface ItemListener {
-        void onRecipeClicked(int position);
-    }
-
     public void setRecipesData(ArrayList<Recipe> recipesData){
         mData = recipesData;
         notifyDataSetChanged();
+    }
+
+    public interface ItemListener {
+        void onRecipeClicked(int position);
     }
 
     @NonNull
     @Override
     public RecipeVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.recipe_list_item, parent, false);
+
         return new RecipeVH(view);
     }
 
@@ -52,7 +53,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH
 
     @Override
     public int getItemCount() {
-        return (mData != null) ? mData.size() : 0;
+        return mData.size();
     }
 
     public class RecipeVH extends RecyclerView.ViewHolder implements View.OnClickListener {
