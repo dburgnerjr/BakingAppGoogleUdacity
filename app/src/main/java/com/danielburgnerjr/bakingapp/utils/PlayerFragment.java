@@ -55,14 +55,14 @@ public class PlayerFragment extends Fragment {
 
         videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
         stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
-        if (savedInstanceState!=null) {
+        if (savedInstanceState != null) {
             playbackPosition = savedInstanceState.getLong(PLAYBACK_POS_EXTRA);
             currentWindow = savedInstanceState.getInt(CURRENT_WINDOW_EXTRA,0);
             playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_EXTRA);
         }
         stepDescriptionTv.setText(stepDescription);
 
-        if(videoUrl.equals("")){
+        if (videoUrl.equals("")) {
             playerView.setVisibility(View.GONE);
         }
         return view;
@@ -95,7 +95,7 @@ public class PlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            releasePlayer();
+            playbackPosition = player.getCurrentPosition();
         }
     }
 
@@ -110,11 +110,14 @@ public class PlayerFragment extends Fragment {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
                     new DefaultTrackSelector(), new DefaultLoadControl());
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();
             playerView.setPlayer(player);
             player.setPlayWhenReady(playWhenReady);
             player.seekTo(currentWindow, playbackPosition);
         }
-        MediaSource mediaSource = new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory("bakingApp-dtn9797"))
+        MediaSource mediaSource = new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory("bakingApp"))
                 .createMediaSource(Uri.parse(videoUrl));
         player.prepare(mediaSource, false, false);
     }
@@ -132,12 +135,9 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        playbackPosition = player.getCurrentPosition();
-        currentWindow = player.getCurrentWindowIndex();
-        playWhenReady = player.getPlayWhenReady();
-        outState.putLong(PLAYBACK_POS_EXTRA,playbackPosition);
-        outState.putInt(CURRENT_WINDOW_EXTRA,currentWindow);
-        outState.putBoolean(PLAY_WHEN_READY_EXTRA,playWhenReady);
+        outState.putLong(PLAYBACK_POS_EXTRA, playbackPosition);
+        outState.putInt(CURRENT_WINDOW_EXTRA, currentWindow);
+        outState.putBoolean(PLAY_WHEN_READY_EXTRA, playWhenReady);
     }
 
     @SuppressLint("InlinedApi")
@@ -149,5 +149,4 @@ public class PlayerFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
-
 }
