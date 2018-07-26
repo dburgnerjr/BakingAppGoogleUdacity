@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:launchMode="singleTop"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|layoutDirection" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +23,16 @@
         </activity>
         <activity android:name=".DetailRecipeListActivity"
             android:parentActivityName=".MainActivity"
-            android:supportsPictureInPicture="true" />
+            android:supportsPictureInPicture="true"
+            android:configChanges="orientation|screenSize|layoutDirection" />
         <activity android:name=".IngredientActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/ingredient_name_hardcoded"
-            android:supportsPictureInPicture="true" />
+            android:supportsPictureInPicture="true"
+            android:configChanges="orientation|screenSize|layoutDirection" />
         <activity android:name=".StepActivity"
-            android:supportsPictureInPicture="true"/>
+            android:supportsPictureInPicture="true"
+            android:configChanges="orientation|screenSize|layoutDirection" />
 
         <service
             android:name=".widget.ListViewWidgetService"
