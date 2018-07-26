@@ -55,11 +55,7 @@ public class PlayerFragment extends Fragment {
 
         videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
         stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
-        if (savedInstanceState != null) {
-            playbackPosition = savedInstanceState.getLong(PLAYBACK_POS_EXTRA);
-            currentWindow = savedInstanceState.getInt(CURRENT_WINDOW_EXTRA,0);
-            playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_EXTRA);
-        }
+        initializePlayer(savedInstanceState);
         stepDescriptionTv.setText(stepDescription);
 
         if (videoUrl.equals("")) {
@@ -71,18 +67,13 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!videoUrl.equals("")) {
-            initializePlayer();
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         hideSystemUi();
-        if ((player == null && !videoUrl.equals(""))) {
-            initializePlayer();
-        }
+
     }
 
     @Override
@@ -95,6 +86,8 @@ public class PlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         playbackPosition = player.getCurrentPosition();
+        currentWindow = player.getCurrentWindowIndex();
+        playWhenReady = player.getPlayWhenReady();
     }
 
     @Override
@@ -102,34 +95,29 @@ public class PlayerFragment extends Fragment {
         super.onStop();
         releasePlayer();
     }
-    private void initializePlayer() {
-        if (player == null) {
-            player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
-                    new DefaultTrackSelector(), new DefaultLoadControl());
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
-            playerView.setPlayer(player);
-            player.setPlayWhenReady(playWhenReady);
-            player.seekTo(currentWindow, playbackPosition);
-        } else {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
-            playerView.setPlayer(player);
-            player.setPlayWhenReady(playWhenReady);
-            player.seekTo(currentWindow, playbackPosition);
-        }
-        MediaSource mediaSource = new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory("bakingApp"))
+
+    private void initializePlayer(Bundle savedInstanceState) {
+        player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getActivity()),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+        playerView.setPlayer(player);
+        MediaSource mediaSource = new ExtractorMediaSource.Factory(new
+                DefaultHttpDataSourceFactory("bakingApp"))
                 .createMediaSource(Uri.parse(videoUrl));
         player.prepare(mediaSource, false, false);
+
+        if (savedInstanceState == null) {
+            player.setPlayWhenReady(true);
+        } else if (savedInstanceState.containsKey(PLAYBACK_POS_EXTRA)) {
+            player.setPlayWhenReady(savedInstanceState.getBoolean(PLAY_WHEN_READY_EXTRA));
+            player.seekTo(savedInstanceState.getInt(CURRENT_WINDOW_EXTRA),
+                    savedInstanceState.getLong(PLAYBACK_POS_EXTRA));
+        }
+
     }
 
     private void releasePlayer() {
         if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
+
             player.release();
             player = null;
         }
@@ -137,10 +125,6 @@ public class PlayerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        playbackPosition = player.getCurrentPosition();
-        currentWindow = player.getCurrentWindowIndex();
-        playWhenReady = player.getPlayWhenReady();
         outState.putLong(PLAYBACK_POS_EXTRA, playbackPosition);
         outState.putInt(CURRENT_WINDOW_EXTRA, currentWindow);
         outState.putBoolean(PLAY_WHEN_READY_EXTRA, playWhenReady);

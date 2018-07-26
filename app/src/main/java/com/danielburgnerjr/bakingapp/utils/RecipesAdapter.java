@@ -12,25 +12,19 @@ import android.widget.TextView;
 import com.danielburgnerjr.bakingapp.model.Recipe;
 import com.danielburgnerjr.bakingapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH> {
 
     Context mContext;
     protected static ItemListener mItemListener;
-    public List<Recipe> mData = new ArrayList<>();
+    public List<Recipe> mData;
     int[] drawableIds = {R.drawable.n_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake};
 
     public RecipesAdapter(Context mContext, ItemListener mItemListener, List<Recipe> mData) {
         this.mContext = mContext;
         this.mItemListener = mItemListener;
         this.mData = mData;
-    }
-
-    public void setRecipesData(ArrayList<Recipe> recipesData){
-        mData = recipesData;
-        notifyDataSetChanged();
     }
 
     public interface ItemListener {
