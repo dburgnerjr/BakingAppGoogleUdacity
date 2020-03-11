@@ -3,9 +3,11 @@ package com.danielburgnerjr.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.danielburgnerjr.bakingapp.model.Recipe;
 import com.danielburgnerjr.bakingapp.model.Step;
@@ -20,7 +22,7 @@ import java.util.List;
 public class DetailRecipeListActivity extends AppCompatActivity implements ListAdapter.ItemListener {
     public static String RECIPE_EXTRA = "recipes_extra";
     private boolean mTwoPane;
-    android.support.v4.app.FragmentManager mFragmentManager;
+    FragmentManager mFragmentManager;
     Recipe recipe;
 
     @Override
