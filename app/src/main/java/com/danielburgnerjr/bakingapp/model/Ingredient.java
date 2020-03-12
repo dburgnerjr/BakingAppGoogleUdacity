@@ -60,10 +60,7 @@ public class Ingredient implements Parcelable {
         dest.writeString(this.strIngredient);
     }
 
-    public Ingredient() {
-    }
-
-    protected Ingredient(Parcel in) {
+    private Ingredient(Parcel in) {
         this.dQuantity = (Double) in.readValue(Double.class.getClassLoader());
         this.strMeasure = in.readString();
         this.strIngredient = in.readString();

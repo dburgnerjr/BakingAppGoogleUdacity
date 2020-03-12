@@ -32,7 +32,7 @@ public class Step implements Parcelable {
         this.nID = nID;
     }
 
-    public String getShortDescription() {
+    String getShortDescription() {
         return strShortDescription;
     }
 
