@@ -18,7 +18,7 @@ import java.util.List;
 public class IngredientFragment extends Fragment {
 
     public static String INGREDIENTS_EXTRA = "i_extra";
-    List<Ingredient> mIngredients = null;
+    private List<Ingredient> mIngredients = null;
 
     public IngredientFragment(){
     }
@@ -29,7 +29,8 @@ public class IngredientFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.ingredients_fragment, container, false);
 
-        mIngredients = getArguments().getParcelableArrayList(INGREDIENTS_EXTRA);
+        if (getArguments() != null)
+            mIngredients = getArguments().getParcelableArrayList(INGREDIENTS_EXTRA);
 
         RecyclerView rv = view.findViewById(R.id.ingredients_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

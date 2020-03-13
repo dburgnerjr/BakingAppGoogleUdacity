@@ -50,4 +50,3 @@ public class WidgetUpdateService extends IntentService {
         context.startService(intent);
     }
 }
-

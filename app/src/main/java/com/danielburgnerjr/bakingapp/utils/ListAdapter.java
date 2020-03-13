@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
-    Context mContext;
-    ArrayList<String> mData;
-    protected static ItemListener mItemClickListener;
+    private Context mContext;
+    private ArrayList<String> mData;
+    private static ItemListener mItemClickListener;
 
-    public ListAdapter(Context mContext, ItemListener mItemClickListener, ArrayList<String> mData) {
+    ListAdapter(Context mContext, ItemListener mItemClickListener, ArrayList<String> mData) {
         this.mContext = mContext;
         this.mData = mData;
-        this.mItemClickListener = mItemClickListener;
+        ListAdapter.mItemClickListener = mItemClickListener;
     }
 
     @NonNull
@@ -45,17 +45,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         void onItemSelected(int pos);
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView shortDescriptionTv;
         int VHPos;
 
-        public ListViewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             shortDescriptionTv = itemView.findViewById(R.id.short_description_tv);
         }
 
-        public void setData (String data, int pos){
+        void setData (String data, int pos){
             shortDescriptionTv.setText(data);
             VHPos = pos;
         }

@@ -25,12 +25,13 @@ public class DetailRecipeListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         if (savedInstanceState != null) {
             mNameList = savedInstanceState.getStringArrayList(LIST_NAMES_EXTRA);
         } else {
-            mNameList = getArguments().getStringArrayList(LIST_NAMES_EXTRA);
+            if (getArguments() != null)
+                mNameList = getArguments().getStringArrayList(LIST_NAMES_EXTRA);
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_detail_recipe_list,container,false);

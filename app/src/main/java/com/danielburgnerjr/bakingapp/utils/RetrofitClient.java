@@ -6,8 +6,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    public static String strBaseUrl = "https://d17h27t6h515a5.cloudfront.net";
+    private static String strBaseUrl;
 
+    static {
+        strBaseUrl = "https://d17h27t6h515a5.cloudfront.net";
+    }
 
     private static Retrofit retrofit = null;
 

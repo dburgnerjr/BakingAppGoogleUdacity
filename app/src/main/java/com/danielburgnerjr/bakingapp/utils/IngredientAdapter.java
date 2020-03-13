@@ -15,26 +15,26 @@ import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
-    Context mContext;
-    List<Ingredient> mItems;
+    private Context mContext;
+    private List<Ingredient> mItems;
 
-    public IngredientAdapter(Context mContext, List<Ingredient> mItems) {
+    IngredientAdapter(Context mContext, List<Ingredient> mItems) {
         this.mContext = mContext;
         this.mItems = mItems;
     }
 
-    public class IngredientViewHolder extends RecyclerView.ViewHolder {
+    class IngredientViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName;
         TextView recipeAmount;
 
-        public IngredientViewHolder(View itemView) {
+        IngredientViewHolder(View itemView) {
             super(itemView);
 
             recipeName = itemView.findViewById(R.id.ingredient_name_tv);
             recipeAmount = itemView.findViewById(R.id.ingredient_amount_tv);
         }
 
-        public void setData(Ingredient data) {
+        void setData(Ingredient data) {
             recipeName.setText(data.getIngredient());
             recipeAmount.setText(mContext.getResources().getString(R.string.ingredient_amount, data.getQuantity(), data.getMeasure()));
         }

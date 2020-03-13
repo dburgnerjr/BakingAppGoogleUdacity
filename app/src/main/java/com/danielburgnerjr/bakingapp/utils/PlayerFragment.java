@@ -1,15 +1,16 @@
 package com.danielburgnerjr.bakingapp.utils;
 
 import android.annotation.SuppressLint;
-import androidx.fragment.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.danielburgnerjr.bakingapp.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -26,19 +27,19 @@ public class PlayerFragment extends Fragment {
 
     public static String VIDEO_URL_EXTRA = "video_url";
     public static String DESCRIPTION_EXTRA = "description";
-    public static String PLAYBACK_POS_EXTRA = "pbpe";
-    public static String CURRENT_WINDOW_EXTRA = "window";
-    public static String PLAY_WHEN_READY_EXTRA = "play";
+    private static String PLAYBACK_POS_EXTRA = "pbpe";
+    private static String CURRENT_WINDOW_EXTRA = "window";
+    private static String PLAY_WHEN_READY_EXTRA = "play";
 
     private SimpleExoPlayer player;
     private PlayerView playerView;
-    private TextView stepDescriptionTv;
+    TextView stepDescriptionTv;
 
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady = true;
     private String videoUrl;
-    private String stepDescription;
+    String stepDescription;
 
     public PlayerFragment() {
 
@@ -52,11 +53,12 @@ public class PlayerFragment extends Fragment {
         playerView = view.findViewById(R.id.video_view);
         stepDescriptionTv = view.findViewById(R.id.step_instruction_tv);
 
-        videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
-        stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
-        initializePlayer(savedInstanceState);
-        stepDescriptionTv.setText(stepDescription);
-
+        if (getArguments() != null) {
+            videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
+            stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
+            initializePlayer(savedInstanceState);
+            stepDescriptionTv.setText(stepDescription);
+        }
         if (videoUrl.equals("")) {
             playerView.setVisibility(View.GONE);
         }

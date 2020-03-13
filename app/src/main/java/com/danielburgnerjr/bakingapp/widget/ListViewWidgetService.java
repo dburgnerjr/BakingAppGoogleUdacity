@@ -22,10 +22,10 @@ public class ListViewWidgetService extends RemoteViewsService {
 
 class AppWidgetListView implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
-    List<Ingredient> ingredients = new ArrayList<>();
-    Recipe recipe = null;
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private Recipe recipe = null;
 
-    public AppWidgetListView(Context mContext) {
+    AppWidgetListView(Context mContext) {
         this.mContext = mContext;
     }
 

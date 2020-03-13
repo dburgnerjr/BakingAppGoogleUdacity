@@ -16,14 +16,14 @@ import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH> {
 
-    Context mContext;
-    protected static ItemListener mItemListener;
-    public List<Recipe> mData;
-    int[] drawableIds = {R.drawable.n_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake};
+    private Context mContext;
+    private static ItemListener mItemListener;
+    private List<Recipe> mData;
+    private int[] drawableIds = {R.drawable.n_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheese_cake};
 
     public RecipesAdapter(Context mContext, ItemListener mItemListener, List<Recipe> mData) {
         this.mContext = mContext;
-        this.mItemListener = mItemListener;
+        RecipesAdapter.mItemListener = mItemListener;
         this.mData = mData;
     }
 
@@ -50,12 +50,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH
         return mData.size();
     }
 
-    public class RecipeVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class RecipeVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipeIv;
         TextView recipeTv;
         int posVh;
 
-        public RecipeVH(View itemView) {
+        RecipeVH(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -63,7 +63,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVH
             recipeTv = itemView.findViewById(R.id.recipe_tv);
         }
 
-        public void setData(Recipe data, int pos) {
+        void setData(Recipe data, int pos) {
             recipeTv.setText(data.getName());
             recipeIv.setImageResource(data.getImageId());
             posVh = pos;
