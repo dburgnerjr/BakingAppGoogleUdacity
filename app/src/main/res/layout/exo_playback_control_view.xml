@@ -15,24 +15,30 @@
 
         <ImageButton android:id="@id/exo_prev"
             android:visibility="gone"
+            android:contentDescription="@string/exo_controls_previous_description"
             style="@style/ExoMediaButton.Previous"/>
 
         <ImageButton android:id="@id/exo_rew"
             android:visibility="gone"
+            android:contentDescription="@string/exo_controls_rewind_description"
             style="@style/ExoMediaButton.Rewind"/>
 
         <ImageButton android:id="@id/exo_play"
+            android:contentDescription="@string/exo_controls_play_description"
             style="@style/ExoMediaButton.Play"/>
 
         <ImageButton android:id="@id/exo_pause"
+            android:contentDescription="@string/exo_controls_pause_description"
             style="@style/ExoMediaButton.Pause"/>
 
         <ImageButton android:id="@id/exo_ffwd"
             android:visibility="gone"
+            android:contentDescription="@string/exo_controls_fastforward_description"
             style="@style/ExoMediaButton.FastForward"/>
 
         <ImageButton android:id="@id/exo_next"
             android:visibility="gone"
+            android:contentDescription="@string/exo_controls_next_description"
             style="@style/ExoMediaButton.Next"/>
 
     </LinearLayout>

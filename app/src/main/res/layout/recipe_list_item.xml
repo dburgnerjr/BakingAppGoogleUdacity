@@ -12,6 +12,7 @@
         android:layout_height="220dp"
         android:src="@drawable/cheese_cake"
         android:scaleType="fitCenter"
+        android:contentDescription="@string/widget_recipe_name"
         android:layout_margin="8dp"/>
 
     <TextView

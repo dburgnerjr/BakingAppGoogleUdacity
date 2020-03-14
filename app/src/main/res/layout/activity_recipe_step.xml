@@ -16,7 +16,6 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/player_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -33,29 +32,28 @@
         android:orientation="horizontal"
         android:layout_weight="1"
         android:gravity="center|bottom">
+
         <Button
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/previous_button"
-            android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
             android:drawableStart="@drawable/ic_arrow_back_black_24dp"
             android:gravity="center"
-            android:textAlignment="gravity"
-            android:layout_weight="1"
-            android:onClick="previousOnClick" />
+            android:onClick="previousOnClick"
+            android:text="@string/previous_button"
+            android:textAlignment="gravity" />
 
         <Button
             android:id="@+id/forward_button"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:textAlignment="gravity"
-            android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
             android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
             android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="nextOnClick" />
+            android:onClick="nextOnClick"
+            android:text="@string/next_button"
+            android:textAlignment="gravity" />
 
     </LinearLayout>
 
