@@ -2,15 +2,17 @@ package com.danielburgnerjr.bakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.danielburgnerjr.bakingapp.utils.PlayerFragment;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+
 import com.danielburgnerjr.bakingapp.model.Step;
+import com.danielburgnerjr.bakingapp.utils.PlayerFragment;
 
 import java.util.List;
 /**
@@ -18,27 +20,27 @@ import java.util.List;
  */
 public class StepActivity extends AppCompatActivity {
 
-    private static String TAG = StepActivity.class.getSimpleName();
     public static String STEPS_EXTRA = "steps";
     public static String POS_EXTRA = "pos";
     public static String RECIPE_NAME_EXTRA = "name";
 
-    private Toolbar toolBar;
+    Toolbar toolBar;
     private Button nextButton;
     private Button previousButton;
 
     private FragmentManager fragmentManager;
-    private PlayerFragment playerFragment;
-    private String recipeName = "";
+    PlayerFragment playerFragment;
+    String recipeName = "";
 
     private int currentPos;
-    private int defaultPos = 0;
+    int defaultPos = 0;
     private List<Step> steps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         setContentView(R.layout.activity_recipe_step);
 
         toolBar = findViewById(R.id.toolBar);
@@ -50,17 +52,20 @@ public class StepActivity extends AppCompatActivity {
         if (intent == null){
             closeOnError();
         }
-        steps = intent.getParcelableArrayListExtra(STEPS_EXTRA);
-        recipeName = intent.getStringExtra(RECIPE_NAME_EXTRA);
-        if (savedInstanceState!= null) {
+        if (intent != null) {
+            steps = intent.getParcelableArrayListExtra(STEPS_EXTRA);
+            recipeName = intent.getStringExtra(RECIPE_NAME_EXTRA);
+        }
+        if (savedInstanceState != null) {
             currentPos = savedInstanceState.getInt(POS_EXTRA);
         } else {
-            currentPos = intent.getIntExtra(POS_EXTRA, defaultPos);
+            if (intent != null)
+                currentPos = intent.getIntExtra(POS_EXTRA, defaultPos);
             populatePlayerView();
         }
 
         toolBar.setTitle(recipeName);
-        toolBar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
+        toolBar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp, null));
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +126,7 @@ public class StepActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(POS_EXTRA,currentPos);
     }

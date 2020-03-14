@@ -3,16 +3,17 @@ package com.danielburgnerjr.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.danielburgnerjr.bakingapp.model.Ingredient;
 import com.danielburgnerjr.bakingapp.utils.IngredientFragment;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngredientActivity extends AppCompatActivity {
     public static String INGREDIENTS_EXTRA = "i_extra";
@@ -21,13 +22,15 @@ public class IngredientActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
+        List<Ingredient> mIngredients = new ArrayList<>();
 
         Intent intent =  getIntent();
         if (intent == null) {
             closeOnError();
         }
 
-        List<Ingredient> mIngredients = intent.getParcelableArrayListExtra(INGREDIENTS_EXTRA);
+        if (intent != null)
+            mIngredients = intent.getParcelableArrayListExtra(INGREDIENTS_EXTRA);
         FragmentManager fragmentManager = getSupportFragmentManager();
         IngredientFragment ingredientFragment = new IngredientFragment();
         Bundle bundle = new Bundle();

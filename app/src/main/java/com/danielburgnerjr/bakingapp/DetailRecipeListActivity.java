@@ -3,10 +3,11 @@ package com.danielburgnerjr.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.danielburgnerjr.bakingapp.model.Recipe;
@@ -37,7 +38,8 @@ public class DetailRecipeListActivity extends AppCompatActivity implements ListA
                 closeOnError();
             }
 
-            recipe = intent.getParcelableExtra(RECIPE_EXTRA);
+            if (intent != null)
+                recipe = intent.getParcelableExtra(RECIPE_EXTRA);
 
             Bundle bundle = new Bundle();
             bundle.putStringArrayList(DetailRecipeListFragment.LIST_NAMES_EXTRA, recipe.getShortDescriptionsFromSteps());
@@ -51,7 +53,8 @@ public class DetailRecipeListActivity extends AppCompatActivity implements ListA
             recipe = savedInstanceState.getParcelable(RECIPE_EXTRA);
         }
 
-        setTitle(recipe.getName());
+        if (recipe != null)
+            setTitle(recipe.getName());
         mTwoPane = findViewById(R.id.step_player_fragment) != null;
     }
 
@@ -107,7 +110,7 @@ public class DetailRecipeListActivity extends AppCompatActivity implements ListA
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(RECIPE_EXTRA, recipe);
     }

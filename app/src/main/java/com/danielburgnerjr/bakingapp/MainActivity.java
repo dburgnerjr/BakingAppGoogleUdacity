@@ -2,20 +2,20 @@ package com.danielburgnerjr.bakingapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.test.espresso.IdlingResource;
 import android.os.Bundle;
-
-import androidx.core.app.NavUtils;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.IdlingResource;
 
 import com.danielburgnerjr.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.danielburgnerjr.bakingapp.model.Recipe;
@@ -28,14 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements RecipesAdapter.ItemListener {
 
-    static private String Tag = MainActivity.class.getSimpleName();
     public static String RECIPES_EXTRA = "recipes_extra";
 
     List<Recipe> mRecipes = new ArrayList<>();
@@ -71,18 +69,17 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(RECIPES_EXTRA, (ArrayList<Recipe>)mRecipes);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        if (item.getItemId() == android.R.id.home) {
             // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -101,16 +98,16 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
     }
 
     public void loadRecipesData () {
-        RecipeClient client = new RetrofitClient().getClient().create(RecipeClient.class);
+        RecipeClient client = RetrofitClient.getClient().create(RecipeClient.class);
         Call<List<Recipe>> call = client.get_recipes();
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 mRecipes = response.body();
                 populateUI();
             }
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                 //Show alert dialog
                 Log.e("Error", "Error in retrofit");
                 AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
