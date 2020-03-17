@@ -1,6 +1,5 @@
 package com.danielburgnerjr.bakingapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,12 +113,7 @@ public class MainActivity extends AppCompatActivity implements RecipesAdapter.It
                 dialog.setCancelable(false);
                 dialog.setTitle(getString(R.string.connection_error_title));
                 dialog.setMessage(getString(R.string.connection_error));
-                dialog.setPositiveButton(getString(R.string.reload_button), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        loadRecipesData();
-                    }
-                });
+                dialog.setPositiveButton(getString(R.string.reload_button), (dialog1, id) -> loadRecipesData());
                 final AlertDialog alert = dialog.create();
                 alert.show();
             }

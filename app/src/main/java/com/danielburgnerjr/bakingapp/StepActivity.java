@@ -66,12 +66,9 @@ public class StepActivity extends AppCompatActivity {
 
         toolBar.setTitle(recipeName);
         toolBar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp, null));
-        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Back button is clicked",Toast.LENGTH_LONG).show();
-                finish();
-            }
+        toolBar.setNavigationOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(),"Back button is clicked",Toast.LENGTH_LONG).show();
+            finish();
         });
 
         setEnablePreviousNextButton();
