@@ -1,13 +1,14 @@
 package com.danielburgnerjr.bakingapp;
 
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -23,8 +24,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
@@ -39,7 +40,7 @@ public class IngredientActivityTest {
     @Test
     public void ingredientActivityTest() {
         DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.recipe_grid_view),
+                .inAdapterView(allOf(withId(R.id.detail_recipe_list_fragment),
                         childAtPosition(
                                 withId(R.id.activity_recipe),
                                 0)))
@@ -58,7 +59,7 @@ public class IngredientActivityTest {
                 allOf(childAtPosition(
                         allOf(withId(R.id.ingredients_rv),
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0)),
                         0),
                         isDisplayed()));
@@ -68,7 +69,7 @@ public class IngredientActivityTest {
                 allOf(withId(R.id.ingredient_name_tv), withText("unsalted butter, melted"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 0),
                         isDisplayed()));
@@ -78,7 +79,7 @@ public class IngredientActivityTest {
                 allOf(withId(R.id.ingredient_amount_tv), withText("5.000000 TBLSP"),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                         0),
                                 1),
                         isDisplayed()));

@@ -1,13 +1,14 @@
 package com.danielburgnerjr.bakingapp;
 
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -38,7 +39,7 @@ public class StepActivityTest {
     @Test
     public void stepActivityTest() {
         DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.recipe_grid_view),
+                .inAdapterView(allOf(withId(R.id.detail_recipe_list_fragment),
                         childAtPosition(
                                 withId(R.id.activity_recipe),
                                 0)))
@@ -73,7 +74,7 @@ public class StepActivityTest {
         textView.check(matches(withText("2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed.")));
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.next_button), withText("Next"),
+                allOf(withId(R.id.forward_button), withText("Next"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),

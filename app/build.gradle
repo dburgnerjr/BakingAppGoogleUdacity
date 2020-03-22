@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //butterknife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //noinspection AnnotationProcessorOnCompilePath
     implementation 'com.jakewharton:butterknife:8.8.1'
     //recycler view
     implementation 'androidx.recyclerview:recyclerview:1.1.0'

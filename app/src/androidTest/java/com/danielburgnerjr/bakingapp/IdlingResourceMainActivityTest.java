@@ -35,8 +35,8 @@ public class IdlingResourceMainActivityTest {
 
     @Test
     public void loadRecipe() {
-        onData(anything()).inAdapterView(withId(R.id.recipe_grid_view)).atPosition(0)
-                .onChildView(withId(R.id.recipe_grid_name))
+        onData(anything()).inAdapterView(withId(R.id.recipe_list_name)).atPosition(0)
+                .onChildView(withId(R.id.recipe_iv))
                 .check(matches(withText(startsWith("Nu"))));
     }
 
