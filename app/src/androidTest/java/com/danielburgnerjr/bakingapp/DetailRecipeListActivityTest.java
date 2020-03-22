@@ -1,13 +1,14 @@
 package com.danielburgnerjr.bakingapp;
 
-import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -37,7 +38,7 @@ public class DetailRecipeListActivityTest {
     @Test
     public void detailActivityTest() {
         DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.recipe_grid_view),
+                .inAdapterView(allOf(withId(R.id.detail_recipe_list_fragment),
                         childAtPosition(
                                 withId(R.id.activity_recipe),
                                 0)))
@@ -49,7 +50,7 @@ public class DetailRecipeListActivityTest {
                         childAtPosition(
                                 allOf(withId(R.id.lv),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                                 0)),
                                 0),
                         isDisplayed()));
@@ -60,7 +61,7 @@ public class DetailRecipeListActivityTest {
                         childAtPosition(
                                 allOf(withId(R.id.lv),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                                 0)),
                                 2),
                         isDisplayed()));
@@ -71,7 +72,7 @@ public class DetailRecipeListActivityTest {
                         childAtPosition(
                                 allOf(withId(R.id.lv),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                                 0)),
                                 3),
                         isDisplayed()));
@@ -82,12 +83,11 @@ public class DetailRecipeListActivityTest {
                         childAtPosition(
                                 allOf(withId(R.id.lv),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                                                 0)),
                                 7),
                         isDisplayed()));
         textView4.check(matches(withText("Finishing Steps")));
-
     }
 
     private static Matcher<View> childAtPosition(

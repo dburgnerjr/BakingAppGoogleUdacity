@@ -1,14 +1,16 @@
 package com.danielburgnerjr.bakingapp.IdlingResource;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.test.espresso.IdlingResource;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.Objects.requireNonNull;
+
 public class SimpleIdlingResource implements IdlingResource {
 
-    @Nullable
-    private volatile ResourceCallback mCallback;
+    @NonNull
+    private final ThreadLocal<ResourceCallback> mCallback = new ThreadLocal<>();
 
     // Idleness is controlled with this boolean.
     private AtomicBoolean mIsIdleNow = new AtomicBoolean(true);
@@ -25,7 +27,7 @@ public class SimpleIdlingResource implements IdlingResource {
 
     @Override
     public void registerIdleTransitionCallback(ResourceCallback callback) {
-        mCallback = callback;
+        mCallback.set(callback);
     }
 
     /**
@@ -34,8 +36,9 @@ public class SimpleIdlingResource implements IdlingResource {
      */
     public void setIdleState(boolean isIdleNow) {
         mIsIdleNow.set(isIdleNow);
-        if (isIdleNow)
-            if (mCallback != null)
-                mCallback.onTransitionToIdle();
+        if (isIdleNow) {
+            if (mCallback.get() != null)
+                requireNonNull(mCallback).get().onTransitionToIdle();
+        }
     }
 }
