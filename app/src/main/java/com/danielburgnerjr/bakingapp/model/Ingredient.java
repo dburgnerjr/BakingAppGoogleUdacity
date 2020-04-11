@@ -23,6 +23,7 @@ public class Ingredient implements Parcelable {
         this.strMeasure = strM;
         this.strIngredient = strI;
     }
+
     public Double getQuantity() {
         return dQuantity;
     }
@@ -46,7 +47,6 @@ public class Ingredient implements Parcelable {
     public void setIngredient(String strI) {
         this.strIngredient = strI;
     }
-
 
     @Override
     public int describeContents() {

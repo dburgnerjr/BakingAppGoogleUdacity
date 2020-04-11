@@ -45,5 +45,4 @@ public class IngredientActivity extends AppCompatActivity {
         finish();
         Toast.makeText(this, getString(R.string.close_on_intent_error), Toast.LENGTH_SHORT).show();
     }
-
 }

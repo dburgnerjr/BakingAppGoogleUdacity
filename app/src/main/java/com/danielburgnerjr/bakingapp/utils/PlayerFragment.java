@@ -33,13 +33,11 @@ public class PlayerFragment extends Fragment {
 
     private SimpleExoPlayer player;
     private PlayerView playerView;
-    TextView stepDescriptionTv;
 
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady = true;
     private String videoUrl;
-    String stepDescription;
 
     public PlayerFragment() {
 
@@ -51,11 +49,11 @@ public class PlayerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player,container, false);
 
         playerView = view.findViewById(R.id.video_view);
-        stepDescriptionTv = view.findViewById(R.id.step_instruction_tv);
+        TextView stepDescriptionTv = view.findViewById(R.id.step_instruction_tv);
 
         if (getArguments() != null) {
             videoUrl = getArguments().getString(VIDEO_URL_EXTRA);
-            stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
+            String stepDescription = getArguments().getString(DESCRIPTION_EXTRA);
             initializePlayer(savedInstanceState);
             stepDescriptionTv.setText(stepDescription);
         }

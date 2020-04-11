@@ -99,14 +99,14 @@ public class StepActivity extends AppCompatActivity {
 
     public void nextOnClick(View view) {
         Toast.makeText(this,"Next",Toast.LENGTH_SHORT).show();
-        currentPos++;
+        ++currentPos;
         setEnablePreviousNextButton();
         populatePlayerView();
     }
 
     public void previousOnClick(View view) {
         Toast.makeText(this,"Previous",Toast.LENGTH_SHORT).show();
-        currentPos--;
+        --currentPos;
         setEnablePreviousNextButton();
         populatePlayerView();
     }

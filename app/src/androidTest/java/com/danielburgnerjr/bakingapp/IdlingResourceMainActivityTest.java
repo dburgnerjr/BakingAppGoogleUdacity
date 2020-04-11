@@ -45,4 +45,3 @@ public class IdlingResourceMainActivityTest {
         IdlingRegistry.getInstance().unregister(mIdlingResource);
     }
 }
-

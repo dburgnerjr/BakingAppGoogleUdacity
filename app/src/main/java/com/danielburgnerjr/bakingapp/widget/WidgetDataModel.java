@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 class WidgetDataModel {
     private static String RECIPE_KEY = "rec";
 
-    protected static void saveRecipe(Context context, Recipe recipe) {
+    static void saveRecipe(Context context, Recipe recipe) {
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
         Gson gson = new Gson();
